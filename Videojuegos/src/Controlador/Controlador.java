@@ -27,6 +27,8 @@ public class Controlador {
 
             modelo.inicializarHabitacion(ancho, alto);
             modelo.agregarPelota(radio, velocidad, ancho, alto);
+
+            vista.getDataPanel().setCantidadPelotas(modelo.getPelotas().size());
         });
 
         // Botón agregar pelota controlable
@@ -39,19 +41,18 @@ public class Controlador {
             modelo.getPelotas().add(pc);
             pc.start(ancho, alto, modelo.getHabitacion(), modelo.getPelotas());
 
-            // La vista captura el teclado
             vista.getPanelPelotas().addKeyListener(pc);
             vista.getPanelPelotas().setFocusable(true);
             vista.getPanelPelotas().requestFocus();
+
+            vista.getDataPanel().setCantidadPelotas(modelo.getPelotas().size());
         });
 
-        // Botón pausar
         vista.getControlPanel().addPausarListener(e -> {
             modelo.detenerPelotas();
             vista.getPanelPelotas().stop();
         });
 
-        // Botón reanudar
         vista.getControlPanel().addReanudarListener(e -> {
             vista.getPanelPelotas().start();
             int ancho = vista.getPanelPelotas().getWidth();
@@ -63,6 +64,8 @@ public class Controlador {
             for (Pelota p : pelotas) {
                 p.start(ancho, alto, habitacion, pelotas);
             }
+
+            vista.getDataPanel().setCantidadPelotas(pelotas.size());
         });
     }
 
@@ -72,5 +75,10 @@ public class Controlador {
 
     public Habitacion obtenerHabitacion() {
         return modelo.getHabitacion();
+    }
+
+    // >>> NUEVO: ACTUALIZACIÓN DE FPS <<<
+    public void actualizarFPS(int fps) {
+        vista.getDataPanel().setFPS(fps);
     }
 }

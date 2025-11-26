@@ -1,11 +1,11 @@
 package Modelo;
 
+import Modelo.PelotaDTO;
 import java.awt.*;
 import java.util.List;
 
 public class Pelota implements Runnable {
 
-    // Campos usados por física (package-private)
     int x, y, radio;
     int velocidadX, velocidadY;
     boolean dentroHabitacion = false;
@@ -27,7 +27,6 @@ public class Pelota implements Runnable {
         this.velocidadX = velocidadX;
         this.velocidadY = velocidadY;
         this.color = color;
-
         this.fisica = new FisicaPelota();
     }
 
@@ -64,10 +63,23 @@ public class Pelota implements Runnable {
     public int getX() { return x; }
     public int getY() { return y; }
     public int getRadio() { return radio; }
-
     public int getVelocidadX() { return velocidadX; }
     public int getVelocidadY() { return velocidadY; }
+    public boolean isDentroHabitacion() { return dentroHabitacion; }
 
     public void setVelocidadX(int vx) { velocidadX = vx; }
     public void setVelocidadY(int vy) { velocidadY = vy; }
+
+    // >>> NUEVO: CREAR UN DTO DE ESTA PELOTA <<<
+    public PelotaDTO toDTO() {
+        return new PelotaDTO(
+                x,
+                y,
+                radio,
+                velocidadX,
+                velocidadY,
+                color,
+                dentroHabitacion
+        );
+    }
 }

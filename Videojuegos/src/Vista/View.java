@@ -8,10 +8,16 @@ import java.awt.image.BufferStrategy;
 import java.util.List;
 
 public class View extends Canvas implements Runnable {
+
     private Thread thread;
     private boolean running;
     private Controlador controlador;
     private BufferStrategy bufferStrategy;
+
+    // >>> NUEVO PARA FPS <<<
+    private int fps = 0;
+    private int frameCount = 0;
+    private long lastTime = System.currentTimeMillis();
 
     public View() {
         setBackground(Color.BLACK);
@@ -46,6 +52,18 @@ public class View extends Canvas implements Runnable {
 
         while (running) {
             if (controlador == null) continue;
+
+            // >>> CALCULO DE FPS <<<
+            frameCount++;
+            long now = System.currentTimeMillis();
+            if (now - lastTime >= 1000) {
+                fps = frameCount;
+                frameCount = 0;
+                lastTime = now;
+
+                // Pasar FPS → Controlador → Vista → DataPanel
+                controlador.actualizarFPS(fps);
+            }
 
             List<Pelota> pelotas = controlador.obtenerPelotas();
             Habitacion habitacion = controlador.obtenerHabitacion();
@@ -82,7 +100,8 @@ public class View extends Canvas implements Runnable {
                 Toolkit.getDefaultToolkit().sync();
             } while (bufferStrategy.contentsLost());
 
-            try { Thread.sleep(16); } catch (InterruptedException e) { e.printStackTrace(); }
+            try { Thread.sleep(16); }
+            catch (InterruptedException e) { e.printStackTrace(); }
         }
     }
 }
