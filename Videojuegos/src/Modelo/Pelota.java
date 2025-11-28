@@ -1,22 +1,21 @@
 package Modelo;
 
-import Modelo.PelotaDTO;
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 
 public class Pelota implements Runnable {
 
-    int x, y, radio;
-    int velocidadX, velocidadY;
-    boolean dentroHabitacion = false;
+    protected int x, y, radio;
+    protected int velocidadX, velocidadY;
+    protected boolean dentroHabitacion = false;
 
     private Color color;
     private boolean running;
     private Thread thread;
 
-    private int anchoLimite, altoLimite;
-    private Habitacion habitacion;
-    private List<Pelota> pelotas;
+    protected int anchoLimite, altoLimite;
+    protected Habitacion habitacion;
+    protected List<Pelota> pelotas;
 
     private final FisicaPelota fisica;
 
@@ -54,7 +53,13 @@ public class Pelota implements Runnable {
     @Override
     public void run() {
         while (running) {
+            // si es controlable, actualiza velocidad según aceleración
+            if (this instanceof PelotaControlable pc) {
+                pc.actualizarVelocidad();
+            }
+
             fisica.actualizar(this, anchoLimite, altoLimite, habitacion, pelotas);
+
             try { Thread.sleep(16); } catch (InterruptedException ignored) {}
         }
     }
@@ -65,21 +70,19 @@ public class Pelota implements Runnable {
     public int getRadio() { return radio; }
     public int getVelocidadX() { return velocidadX; }
     public int getVelocidadY() { return velocidadY; }
-    public boolean isDentroHabitacion() { return dentroHabitacion; }
 
+    public boolean isDentroHabitacion() { return dentroHabitacion; }
     public void setVelocidadX(int vx) { velocidadX = vx; }
     public void setVelocidadY(int vy) { velocidadY = vy; }
 
-    // >>> NUEVO: CREAR UN DTO DE ESTA PELOTA <<<
     public PelotaDTO toDTO() {
         return new PelotaDTO(
-                x,
-                y,
-                radio,
-                velocidadX,
-                velocidadY,
-                color,
-                dentroHabitacion
+                x, y, radio, velocidadX, velocidadY, color, dentroHabitacion
         );
     }
+    public void actualizarVelocidad() {
+        // Metodo vacío para que las subclases lo sobrescriban
+    }
+
+
 }
