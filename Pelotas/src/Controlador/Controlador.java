@@ -48,11 +48,13 @@ public class Controlador {
             vista.getDataPanel().setCantidadPelotas(modelo.getPelotas().size());
         });
 
+        // Pausar todas las pelotas
         vista.getControlPanel().addPausarListener(e -> {
             modelo.detenerPelotas();
             vista.getPanelPelotas().stop();
         });
 
+        // Reanudar todas las pelotas
         vista.getControlPanel().addReanudarListener(e -> {
             vista.getPanelPelotas().start();
             int ancho = vista.getPanelPelotas().getWidth();
@@ -77,7 +79,6 @@ public class Controlador {
         return modelo.getHabitacion();
     }
 
-    // >>> NUEVO: ACTUALIZACIÓN DE FPS <<<
     public void actualizarFPS(int fps) {
         vista.getDataPanel().setFPS(fps);
     }

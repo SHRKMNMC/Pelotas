@@ -2,6 +2,7 @@ package Vista;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class ControlPanel extends JPanel {
     private JButton btnAgregarPelota;
@@ -32,27 +33,28 @@ public class ControlPanel extends JPanel {
         add(btnReanudar);
     }
 
+    // Solo se exponen métodos para registrar listeners
+    public void addAgregarPelotaListener(ActionListener listener) {
+        btnAgregarPelota.addActionListener(listener);
+    }
+
+    public void addAgregarControlableListener(ActionListener listener) {
+        btnAgregarControlable.addActionListener(listener);
+    }
+
+    public void addPausarListener(ActionListener listener) {
+        btnPausar.addActionListener(listener);
+    }
+
+    public void addReanudarListener(ActionListener listener) {
+        btnReanudar.addActionListener(listener);
+    }
+
     public int getTamanioSeleccionado() {
         return (Integer) comboTamanio.getSelectedItem();
     }
 
     public int getVelocidadSeleccionada() {
         return (Integer) comboVelocidad.getSelectedItem();
-    }
-
-    public void addAgregarPelotaListener(java.awt.event.ActionListener listener) {
-        btnAgregarPelota.addActionListener(listener);
-    }
-
-    public void addAgregarControlableListener(java.awt.event.ActionListener listener) {
-        btnAgregarControlable.addActionListener(listener);
-    }
-
-    public void addPausarListener(java.awt.event.ActionListener listener) {
-        btnPausar.addActionListener(listener);
-    }
-
-    public void addReanudarListener(java.awt.event.ActionListener listener) {
-        btnReanudar.addActionListener(listener);
     }
 }

@@ -1,8 +1,9 @@
 package Vista;
 
 import Controlador.Controlador;
-import java.awt.*;
+
 import javax.swing.*;
+import java.awt.*;
 
 public class Vista extends JFrame {
     private View panelPelotas;
@@ -24,7 +25,7 @@ public class Vista extends JFrame {
         JScrollPane scrollPane = new JScrollPane(dataPanel);
         scrollPane.setPreferredSize(new Dimension(200, 100));
 
-        gbc.gridx = 0;gbc.gridy = 0; gbc.gridwidth = 1; gbc.gridheight = 1;
+        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 1; gbc.gridheight = 1;
         gbc.weightx = 0; gbc.weighty = 0; gbc.fill = GridBagConstraints.HORIZONTAL;
         add(scrollPane, gbc);
 
